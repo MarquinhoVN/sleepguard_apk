@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleepguard_app/modules/home/widgets/dashboard.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/firebase/database.dart';
@@ -12,23 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Sleepguard')),
-      body: Consumer<HomeController>(
-        builder: (context, controller, child) {
-          final environment = controller.environment;
-
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Movimento: ${environment?.moviment}"),
-                Text("Temperatura: ${environment?.temperature}"),
-                Text("Umidade: ${environment?.humidity}"),
-                Text("Posicao: ${environment?.position.x}, ${environment?.position.y}, ${environment?.position.z}"),
-              ],
-            ),
-          );
-        }
-      ),
+      body: const Column(children: [Expanded(child: Dashboard(),),],),
     );
   }
 }

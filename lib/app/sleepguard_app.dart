@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sleepguard_app/core/core.dart';
 
@@ -10,16 +11,19 @@ class SleepguardApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: Providers.global,
-      child: MaterialApp(
-        title: 'Sleepguard',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      child: MultiProvider(
+        providers: Providers.global,
+        child: MaterialApp(
+          title: 'Sleepguard',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          ),
+          navigatorKey: navigatorKey,
+          routes: Pages.pages,
+          initialRoute: Routes.home,
         ),
-        navigatorKey: navigatorKey,
-        routes: Pages.pages,
-        initialRoute: Routes.home,
       ),
     );
   }
