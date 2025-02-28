@@ -6,9 +6,9 @@ import 'package:sleepguard_app/core/ui/theme/theme/styles/text_styles.dart';
 class DashboardTile extends StatelessWidget {
   final String? title;
   final String? value;
-  final String? icon;
-  final String? color;
-  final String? textColor;
+  final IconData? icon;
+  final Color? color;
+  final Color? textColor;
   const DashboardTile({
     super.key,
     required this.title,
@@ -23,7 +23,7 @@ class DashboardTile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
       decoration: BoxDecoration(
-        color: Color(0xFFECECEC),
+        color: color,
         borderRadius: BorderRadius.circular(24.r),
       ),
       child: Row(
@@ -37,11 +37,17 @@ class DashboardTile extends StatelessWidget {
               children: [
                 Text(
                   title ?? "",
-                  style: context.textStyles.bold.copyWith(fontSize: 12.sp),
+                  style: context.textStyles.bold.copyWith(
+                    fontSize: 12.sp,
+                    color: textColor,
+                  ),
                 ),
                 Text(
                   value ?? "",
-                  style: context.textStyles.bold.copyWith(fontSize: 22.sp),
+                  style: context.textStyles.bold.copyWith(
+                    fontSize: 22.sp,
+                    color: textColor,
+                  ),
                 ),
               ],
             ),
@@ -54,15 +60,7 @@ class DashboardTile extends StatelessWidget {
             ),
             width: 41.r,
             height: 41.r,
-            child: Center(
-              child: SizedBox(
-                height: 22.h,
-                child: CachedNetworkImage(
-                  imageUrl: "https://picsum.photos/200",
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
+            child: Center(child: SizedBox(height: 22.h, child: Icon(icon))),
           ),
         ],
       ),

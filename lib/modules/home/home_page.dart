@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sleepguard_app/core/ui/theme/extensions/extensions.dart';
+import 'package:sleepguard_app/modules/home/widgets/alert_tile.dart';
+import 'package:sleepguard_app/modules/home/widgets/dashboard.dart';
 import 'package:provider/provider.dart';
+import 'package:sleepguard_app/modules/home/widgets/title.dart';
 
 import '../../core/firebase/database.dart';
 import 'home_controller.dart';
@@ -16,24 +20,35 @@ class HomePage extends StatelessWidget {
         builder: (context, controller, child) {
           final environment = controller.environment;
           final alerts = controller.alerts;
-
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Movimento: ${environment?.moviment}"),
-                Text("Temperatura: ${environment?.temperature}"),
-                Text("Umidade: ${environment?.humidity}"),
-                Text("Posicao: ${environment?.position.x}, ${environment?.position.y}, ${environment?.position.z}"),
-                SizedBox(height: 20),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: SingleChildScrollView(
+              child: Column(
+                spacing: 16.h,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TitleComponent(
+                    iconColor: Colors.blueAccent,
+                    title: "Painel de monitoramento",
+                    icon: Icons.dashboard,
+                  ),
+                  if (controller.isLoading == true) ...{
+                    CircularProgressIndicator(),
+                  } else ...{
+                    Dashboard(environments: environment),
+                  },
+                  TitleComponent(
+                    iconColor: Colors.red,
+                    title: "Alertas",
+                    icon: Icons.warning,
+                  ),
                   for (final alert in alerts ?? [])
-                    Text(
-                      "Horario: ${alert.hour}, Mensagem: ${alert.message}",
-                    ),
-              ],
+                    AlertTile(dateTime: alert.hour, message: alert.message),
+                ],
+              ),
             ),
           );
-        }
+        },
       ),
     );
   }
