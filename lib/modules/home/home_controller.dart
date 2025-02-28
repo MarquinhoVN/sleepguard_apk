@@ -13,7 +13,7 @@ class HomeController extends ChangeNotifier {
     fetchData();
   }
 
-  bool? isLoading;
+  bool isLoading = false;
   EnvironmentModel? _environment;
   EnvironmentModel? get environment => _environment;
   List<AlertModel>? _alerts;
@@ -45,14 +45,14 @@ class HomeController extends ChangeNotifier {
         "alertas",
       );
 
-      environmentRef.once().then((snapshot) {
+      await environmentRef.once().then((snapshot) {
         final data = snapshot.snapshot.value;
 
         final environment = EnvironmentModel.fromJson(data as Map);
         setEnvironment(environment);
       });
 
-      alertsRef.once().then((snapshot) {
+      await alertsRef.once().then((snapshot) {
         final data = snapshot.snapshot.value;
 
         Map<String, dynamic> alertsMap = Map<String, dynamic>.from(data as Map);

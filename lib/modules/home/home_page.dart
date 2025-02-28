@@ -20,6 +20,11 @@ class HomePage extends StatelessWidget {
         builder: (context, controller, child) {
           final environment = controller.environment;
           final alerts = controller.alerts;
+
+          if (controller.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: SingleChildScrollView(
@@ -32,11 +37,7 @@ class HomePage extends StatelessWidget {
                     title: "Painel de monitoramento",
                     icon: Icons.dashboard,
                   ),
-                  if (controller.isLoading == true) ...{
-                    CircularProgressIndicator(),
-                  } else ...{
-                    Dashboard(environments: environment),
-                  },
+                  Dashboard(environments: environment),
                   TitleComponent(
                     iconColor: Colors.red,
                     title: "Alertas",
