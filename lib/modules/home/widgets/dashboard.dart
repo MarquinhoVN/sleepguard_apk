@@ -44,7 +44,7 @@ class Dashboard extends StatelessWidget {
           textColor: Colors.black,
         ),
         DashboardTile(
-          title: "Umidade",
+          title: "Posição",
           value:
               "${environments?.position.x}, ${environments?.position.y}, ${environments?.position.z}",
           icon: Icons.water,

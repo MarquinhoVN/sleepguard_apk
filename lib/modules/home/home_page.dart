@@ -27,25 +27,31 @@ class HomePage extends StatelessWidget {
 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: SingleChildScrollView(
-              child: Column(
-                spacing: 16.h,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TitleComponent(
-                    iconColor: Colors.blueAccent,
-                    title: "Painel de monitoramento",
-                    icon: Icons.dashboard,
-                  ),
-                  Dashboard(environments: environment),
-                  TitleComponent(
-                    iconColor: Colors.red,
-                    title: "Alertas",
-                    icon: Icons.warning,
-                  ),
-                  for (final alert in alerts ?? [])
-                    AlertTile(dateTime: alert.hour, message: alert.message),
-                ],
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await controller.fetchData();
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  spacing: 16.h,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TitleComponent(
+                      iconColor: Colors.blueAccent,
+                      title: "Painel de monitoramento",
+                      icon: Icons.dashboard,
+                    ),
+                    Dashboard(environments: environment),
+                    TitleComponent(
+                      iconColor: Colors.red,
+                      title: "Alertas",
+                      icon: Icons.warning,
+                    ),
+                    for (final alert in alerts ?? [])
+                      AlertTile(dateTime: alert.hour, message: alert.message),
+                  ],
+                ),
               ),
             ),
           );
