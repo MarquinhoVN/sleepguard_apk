@@ -49,7 +49,10 @@ class _HomePageState extends State<HomePage> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final alertList = alerts ?? [];
+          final alertList = (alerts ?? [])
+          ..removeWhere((e) => e == null || e.hour == null)
+          ..sort((a, b) => b.hour!.compareTo(a.hour!));
+
           final totalAlerts = alertList.length;
 
           int startIndex = page * pageSize;
