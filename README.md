@@ -1,16 +1,34 @@
-# sleepguard_app
+# SleepGuard - Aplicativo de Monitoramento de Padrão de Sono
 
-A new Flutter project.
+**SleepGuard** é um aplicativo para monitoramento de padrões de sono de pacientes, utilizando Flutter para a interface e Firebase Realtime Database para armazenar e gerenciar os dados em tempo real.
 
-## Getting Started
+## Funcionalidades Principais
 
-This project is a starting point for a Flutter application.
+- **Exibição de Dados de Sono**: Visualização dos dados coletados dos sensores de movimento e acelerômetro.
+- **Armazenamento de Dados**: Os dados de sono são salvos e atualizados em tempo real no Firebase Realtime Database.
+- **Notificações de Alerta**: Notificações enviadas quando padrões de sono anormais são detectados.
+- **Controle Remoto**: A partir do aplicativo, os profissionais de saúde podem acionar os atuadores, como LEDs e buzzer, remotamente.
 
-A few resources to get you started if this is your first Flutter project:
+## Tecnologias Utilizadas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter**: Framework para desenvolvimento do aplicativo mobile.
+- **Firebase**: Para armazenamento de dados em tempo real com Firebase Realtime Database.
+- **Firebase Authentication**: Para autenticação de usuários, garantindo acesso seguro ao aplicativo.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Funcionalidades do Aplicativo
+
+### Visualização dos Dados
+O aplicativo permite que o usuário visualize os dados de sono coletados em tempo real. Isso inclui:
+- Padrões de movimento
+- Alertas de distúrbios no sono
+- Gráficos de monitoramento
+
+### Armazenamento de Dados
+O aplicativo usa **Firebase Realtime Database** para armazenar e sincronizar os dados de sono coletados. O sistema armazena:
+- Dados de movimento e posição do paciente
+- Informações sobre a qualidade do sono
+- Notificações de alerta
+
+### Notificações em Tempo Real
+Sempre que um distúrbio no padrão de sono é detectado (como agitação ou ausência de movimento), o sistema envia uma notificação para o médico ou responsável, permitindo uma resposta imediata.
+
