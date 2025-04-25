@@ -35,36 +35,42 @@ class HomeController extends ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    setLoading(true);
-    try {
-      final environmentRef = context
-          .read<FirebaseDatabaseProvider>()
-          .database
-          .ref("variaveisAmbiente");
-      final alertsRef = context.read<FirebaseDatabaseProvider>().database.ref(
-        "alertas",
+  setLoading(true);
+  try {
+    final environmentRef = context
+        .read<FirebaseDatabaseProvider>()
+        .database
+        .ref("variaveisAmbiente");
+    final alertsRef = context
+        .read<FirebaseDatabaseProvider>()
+        .database
+        .ref("alertas");
+
+    final environmentSnapshot = await environmentRef.get();
+    final environmentData = environmentSnapshot.value;
+    if (environmentData != null && environmentData is Map) {
+      final environment = EnvironmentModel.fromJson(
+        Map<String, dynamic>.from(environmentData),
       );
-
-      await environmentRef.once().then((snapshot) {
-        final data = snapshot.snapshot.value;
-
-        final environment = EnvironmentModel.fromJson(data as Map);
-        setEnvironment(environment);
-      });
-
-      await alertsRef.once().then((snapshot) {
-        final data = snapshot.snapshot.value;
-
-        Map<String, dynamic> alertsMap = Map<String, dynamic>.from(data as Map);
-
-        setAlerts(
-          alertsMap.values
-              .map((alertJson) => AlertModel.fromJson(alertJson))
-              .toList(),
-        );
-      });
-    } finally {
-      setLoading(false);
+      setEnvironment(environment);
     }
+
+    final alertsSnapshot = await alertsRef.get();
+    final alertsData = alertsSnapshot.value;
+    if (alertsData != null && alertsData is Map) {
+      final alertsMap = Map<String, dynamic>.from(alertsData);
+      final alertsList = alertsMap.values.map((alertJson) {
+        return AlertModel.fromJson(Map<String, dynamic>.from(alertJson));
+      }).toList();
+
+      setAlerts(alertsList);
+    } else {
+      setAlerts([]);
+    }
+  } catch (e) {
+    print('Erro ao buscar dados: $e');
+  } finally {
+    setLoading(false);
   }
+}
 }

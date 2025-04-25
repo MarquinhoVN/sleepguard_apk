@@ -14,11 +14,12 @@ class EnvironmentModel {
   });
 
   factory EnvironmentModel.fromJson(Map json) {
-    return EnvironmentModel(
-      moviment: json['movimento'],
-      temperature: json['temperatura'],
-      humidity: json['umidade'],
-      position: PositionModel.fromJson(json['posicao']),
-    );
-  }
+  return EnvironmentModel(
+    moviment: json['movimento'],
+    temperature: (json['temperatura'] as num).toInt(),
+    humidity: (json['umidade'] as num).toInt(),
+    position: PositionModel.fromJson(json['posicao']),
+  );
+}
+
 }
